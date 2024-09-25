@@ -6,52 +6,82 @@ using System.Threading.Tasks;
 using TextRPG_Project2nd.Character;
 using TextRPG_Project2nd.Dogma;
 using TextRPG_Project2nd.Item;
+using System.Text.Json;
+using Microsoft.VisualBasic;
 
 namespace TextRPG_Project2nd.System
 {
     public struct SaveIndex
     {
-        public List<int[]> shopItemList = new List<int[]>(); // Merchandise -> int[] = {itemID, amount}
-        public List<int> storageItemList = new List<int>(); // IItem -> int = itemID
+        public List<string[]> shopItemList { get; set; } = new List<string[]>();// Merchandise -> int[] = {itemID, amount}
+        public List<string[]> storageConsumableList { get; set; } = new List<string[]>(); // IItem -> int = itemID
+        public List<string> storageClothList { get; set; } = new List<string>(); // IItem -> int = itemID
+        public List<string> storageWeaponList { get; set; } = new List<string>(); // IItem -> int = itemID
 
-        public int playerLevel;
-        public int playerExp;
+        public string playerName { get; set; }
+        public string playerLevel { get; set; }
+        public string playerExp { get; set; }
 
-        public ICloth playerCloth;
-        public IWeapon playerWeapon;
-        public int[,] playerConsumables = new int[3,2]; // CounsumableSlot -> int[,] = {{itemID, amount}, ...}
-        public IDogma playerDogma;
+        public string playerCloth { get; set; }
+        public string playerWeapon { get; set; }
+        public string[] playerConsumablesId { get; set; } = new string[3]; // CounsumableSlot -> ID와 개수로 쪼개넣기.
+        public string[] playerConsumablesAmount { get; set; } = new string[3];
 
-        public int saveAmber;
-        public bool[] saveIsCleared = new bool[4];
+        public string playerDogma { get; set; }
 
-        public SaveIndex(List<Merchandise> _shopItemList, List<IItem> _storageItemList,
-                         int _playerLevel, int _plaerExp, 
-                         ICloth _playerCloth, IWeapon _playerWeapon, ConsumableSlot[] _playerConsumables, IDogma _playerDogma,
+        public string saveAmber { get; set; }
+        public string[] saveIsCleared { get; set; } = new string[4];
+
+        public SaveIndex(List<Merchandise> _shopItemList, List<IStackable> _storageConsumableList,
+                         List<ICloth> _storageClothList, List<IWeapon> _storageWeaponList,
+                         string _playerName, int _playerLevel, int _plaerExp,
+                         int _playerCloth, int _playerWeapon, ConsumableSlot[] _playerConsumables, int _playerDogma,
                          int _saveAmber, bool[] _saveIsCleared)
         {
-            for(int i = 0; i < _shopItemList.Count; i++)
-                shopItemList.Add(new int[] { _shopItemList[i].item.ItemID, _shopItemList[i].amount });
+            shopItemList.Clear();
+            for (int i = 0; i < _shopItemList.Count; i++)
+                shopItemList.Add(new string[] { _shopItemList[i].item.ItemID.ToString(), _shopItemList[i].amount.ToString() });
 
-            for (int i = 0; i < _storageItemList.Count; i++)
-                storageItemList.Add(_storageItemList[i].ItemID);
+            storageConsumableList.Clear();
+            for (int i = 0; i < _storageConsumableList.Count; i++)
+                storageConsumableList.Add(new string[] { (_storageConsumableList[i] as IItem).ItemID.ToString(), _storageConsumableList[i].Amount.ToString() });
 
-            playerLevel = _playerLevel;
-            playerExp = _plaerExp;
+            storageClothList.Clear();
+            for (int i = 0; i < _storageClothList.Count; i++)
+                storageClothList.Add((_storageClothList[i] as IItem).ItemID.ToString());
 
-            playerCloth = _playerCloth;
-            playerWeapon = _playerWeapon;
-            
-            for(int i = 0; i < 3; i++)
+            storageWeaponList.Clear();
+            for (int i = 0; i < _storageWeaponList.Count; i++)
+                storageWeaponList.Add((_storageWeaponList[i] as IItem).ItemID.ToString());
+
+            playerName = _playerName;
+            playerLevel = _playerLevel.ToString();
+            playerExp = _plaerExp.ToString();
+
+            playerCloth = _playerCloth.ToString();
+            playerWeapon = _playerWeapon.ToString();
+
+            for (int i = 0; i < 3; i++)
             {
-                playerConsumables[i, 0] = (_playerConsumables[i].consumable as IItem).ItemID;
-                playerConsumables[i, 1] = _playerConsumables[i].consumable.Amount;
+                if (_playerConsumables[i] != null)
+                {
+                    playerConsumablesId[i] = (_playerConsumables[i].consumable as IItem).ItemID.ToString();
+                    playerConsumablesAmount[i] = _playerConsumables[i].amount.ToString();
+                }
+
+                else
+                {
+                    playerConsumablesId[i] = (-1).ToString();
+                    playerConsumablesAmount[i] = (-1).ToString();
+                }
             }
 
-            playerDogma = _playerDogma;
+            playerDogma = _playerDogma.ToString();
 
-            saveAmber = _saveAmber;
-            saveIsCleared = _saveIsCleared.ToArray();
+            saveAmber = _saveAmber.ToString();
+
+            for(int i = 0; i < _saveIsCleared.Length; i++)
+                saveIsCleared[i] = _saveIsCleared[i].ToString();
         }
     }
 
@@ -62,28 +92,113 @@ namespace TextRPG_Project2nd.System
             IPlayer tempPlayer = GameManager.Instance().player as IPlayer;
 
             // 세이브 내용 불러오기
-            SaveIndex tempSave = new SaveIndex(GameManager.Instance().shop.merchandiseList, GameManager.Instance().storage.itemList,
-                                               (tempPlayer as ICharacter).Level, tempPlayer.ExpCur,
-                                               tempPlayer.Cloth, tempPlayer.Weapon, tempPlayer.ConsumableList, tempPlayer.Dogma,
-                                               GameManager.Instance().amber, GameManager.Instance().isCleared);
+            SaveIndex tempSave = new SaveIndex(GameManager.Instance().shop.merchandiseList, GameManager.Instance().storage.consumableList,
+                                               GameManager.Instance().storage.clothList, GameManager.Instance().storage.weaponList,
+                                               (tempPlayer as ICharacter).Name, (tempPlayer as ICharacter).Level, tempPlayer.ExpCur,
+                                               (tempPlayer.Cloth as IItem).ItemID, (tempPlayer.Weapon as IItem).ItemID, tempPlayer.ConsumableList,
+                                               tempPlayer.Dogma.DogmaID, GameManager.Instance().amber, GameManager.Instance().isCleared);
+
+            // 디렉토리 지정
+            string FilePath = Directory.GetCurrentDirectory() + "\\SaveData";
+            if (!Directory.Exists(FilePath))
+                Directory.CreateDirectory(FilePath);
 
             // 세이브 시작
+            string SaveString = JsonSerializer.Serialize(tempSave);
+            File.WriteAllText(Path.Combine(FilePath, $"SaveData{index}.json"), SaveString);
         }
 
-        public bool LoadGame(int index)
+        public SaveIndex LoadGame(int index)
         {
-            string LoadString = File.ReadAllText(Path.Combine(FilePath, "test.json"));
-            output = JsonSerializer.Deserialize<Data>(LoadString);
+            SaveIndex saveData = new SaveIndex();
+            string LoadString;
+            //Link
+            string FilePath = Directory.GetCurrentDirectory() + $"\\SaveData\\SaveData{index}.json";
 
-            return false;
+            //Load
+            if (File.Exists(FilePath))
+            {
+                LoadString = File.ReadAllText(FilePath);
+                saveData = JsonSerializer.Deserialize<SaveIndex>(LoadString);
+            }
+
+            return saveData;
         }
 
         public bool CheckSave(int index)
         {
+            //Link
+            string FilePath = Directory.GetCurrentDirectory() + $"\\SaveData\\SaveData{index}.json";
+
+            //Load
+            if (File.Exists(FilePath))
+                return true;
+            else
+                return false;
+        }
+
+        public void AdjustSave(SaveIndex _save)
+        {
+            IdCollection idDict = new IdCollection();
+
+            GameManager.Instance().shop.merchandiseList.Clear();
+            for (int i = 0; i < _save.shopItemList.Count; i++)
+            {
+                Merchandise tempMerchandise = new Merchandise(idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.shopItemList[i][0])),
+                                                              Convert.ToInt32(_save.shopItemList[i][1]));
+                GameManager.Instance().shop.merchandiseList.Add(tempMerchandise);
+            }
+
+            GameManager.Instance().storage.itemList.Clear();
+            GameManager.Instance().storage.UpdateStorage();
+
+            for (int i = 0; i < _save.storageConsumableList.Count; i++)
+            {
+                IItem tempConsumable = idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.storageConsumableList[i][0]));
+                GameManager.Instance().storage.GetItemConsumable(tempConsumable, Convert.ToInt32(_save.storageConsumableList[i][1]));
+            }
+
+            for (int i = 0; i < _save.storageClothList.Count; i++)
+            {
+                IItem tempCloth = idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.storageClothList[i]));
+                GameManager.Instance().storage.GetItem(tempCloth);
+            }
+
+            for (int i = 0; i < _save.storageWeaponList.Count; i++)
+            {
+                IItem tempWeapon = idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.storageWeaponList[i]));
+                GameManager.Instance().storage.GetItem(tempWeapon);
+            }
+
+            ICharacter player = GameManager.Instance().player;
+
+            player.Name = _save.playerName;
+            player.Level = Convert.ToInt32(_save.playerLevel);
+            (player as IPlayer).ExpCur = 0;
+            (player as IPlayer).GetExp(Convert.ToInt32(_save.playerExp));
+
+            (player as IPlayer).Cloth = idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.playerCloth)) as ICloth;
+            (player as IPlayer).Weapon = idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.playerWeapon)) as IWeapon;
+
+            for(int i = 0; i < (player as IPlayer).ConsumableList.Length; i++)
+            {
+                if (Convert.ToInt32(_save.playerConsumablesId[i]) > 0)
+                {
+                    IStackable tempStackable = idDict.itemCollection.Find(id => id.ItemID == Convert.ToInt32(_save.playerConsumablesId[i])) as IStackable;
+                    (player as IPlayer).ConsumableList[i] = new ConsumableSlot(tempStackable, Convert.ToInt32(_save.playerConsumablesAmount[i]));
+                }
+                else
+                {
+                    (player as IPlayer).ConsumableList[i] = null;
+                }
+            }
+
+            (player as IPlayer).Dogma = idDict.dogmaCollection.Find(id => id.DogmaID == Convert.ToInt32(_save.playerDogma));
+
+            GameManager.Instance().amber = Convert.ToInt32(_save.saveAmber);
             
-            
-            
-            return false;
+            for(int i = 0; i < _save.saveIsCleared.Length; i++)
+                GameManager.Instance().isCleared[i] = Convert.ToBoolean(_save.saveIsCleared[i]);
         }
     }
 }

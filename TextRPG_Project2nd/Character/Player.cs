@@ -129,12 +129,12 @@ namespace TextRPG_Project2nd.Character
             else
                 typeAtk = new int[] { 65, 65, 65 };
 
-            baseAtk = (int)(100.0f * (MathF.Pow(1.25f, level)));
+            baseAtk = (int)(100.0f * (MathF.Pow(1.1f, level)));
         }
 
         public void UpdateHp()
         {
-            hpMax = (int)(100.0f * (MathF.Pow(1.25f, level)));
+            hpMax = (int)(100.0f * (MathF.Pow(1.4f, level)));
             hpCur = hpMax;
         }
 
@@ -172,7 +172,6 @@ namespace TextRPG_Project2nd.Character
                 {
                     expCur -= expMax;
                     level++;
-                    expMax = (int)((100.0f * MathF.Pow(2.5f, level)) - (50 * MathF.Pow(level, 2)));
 
                     UpdateHp();
                     UpdateAttribute();
@@ -181,6 +180,11 @@ namespace TextRPG_Project2nd.Character
                         expCur = -1;
                 }
             }
+
+            else
+                expCur = -1;
+
+            expMax = (int)((100.0f * MathF.Pow(2.5f, level)) - (50 * MathF.Pow(level, 2)));
         }
 
         public bool UseItem(int index)

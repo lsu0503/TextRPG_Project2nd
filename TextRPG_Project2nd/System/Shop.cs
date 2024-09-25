@@ -32,17 +32,13 @@ namespace TextRPG_Project2nd.System
             merchandiseList.Add(new Merchandise(new WondererCloth(), 0));
             merchandiseList.Add(new Merchandise(new BluntRod(), 0));
             merchandiseList.Add(new Merchandise(new BluntRod(), 0));
+            merchandiseList.Add(new Merchandise(new LeaderArmor(), 0));
+            merchandiseList.Add(new Merchandise(new LeaderArmor(), 0));
+            merchandiseList.Add(new Merchandise(new ShortSword(), 0));
+            merchandiseList.Add(new Merchandise(new ShortSword(), 0));
             merchandiseList.Add(new Merchandise(new HealingPotion1(), -1));
             merchandiseList.Add(new Merchandise(new StrengthPotion(), 20));
             merchandiseList.Add(new Merchandise(new SoulStoneFragment(), -1));
-        }
-
-        public void PurchaseItem(IItem item)
-        {
-            merchandiseList.Add(new Merchandise(new HealingPotion1(), -1));
-            merchandiseList.Add(new Merchandise(new WondererCloth(), 0));
-            merchandiseList.Add(new Merchandise(new SoulStoneFragment(), 0));
-            merchandiseList.Add(new Merchandise(new BluntRod(), -1));
         }
 
         public bool BuyItem(int _Index, int _amount)

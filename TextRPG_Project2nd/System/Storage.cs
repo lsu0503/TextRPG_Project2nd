@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextRPG_Project2nd.Item;
+using TextRPG_Project2nd.Item.Consumables;
 
 namespace TextRPG_Project2nd.System
 {

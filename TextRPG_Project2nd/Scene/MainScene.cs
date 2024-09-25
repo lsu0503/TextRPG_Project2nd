@@ -7,6 +7,7 @@ using TextRPG_Project2nd.Action;
 using TextRPG_Project2nd.Character;
 using TextRPG_Project2nd.Item;
 using TextRPG_Project2nd.Item.Cloth;
+using TextRPG_Project2nd.System;
 
 namespace TextRPG_Project2nd.Scene
 {
@@ -51,7 +52,7 @@ namespace TextRPG_Project2nd.Scene
                 Console.SetCursorPosition(42, 4);
                 Console.Write("Z: OK    X: Cancel");
 
-                new DisplayCollection().DisplayCharaInfo(118, 0);
+                new DisplayCollection().DisplayCharaInfo(Console.WindowWidth - 1, 0);
 
                 Console.SetCursorPosition(0, 0);
 
@@ -602,7 +603,10 @@ namespace TextRPG_Project2nd.Scene
             {
                 case 'Z':
                     if (optionCur == 0 || GameManager.Instance().isCleared[optionCur - 1])
+                    {
+                        GameManager.Instance().gradeDifficulty = optionCur;
                         GameManager.Instance().SceneCurrent = GameManager.SceneNum.DungeonScene;
+                    }
                     else
                         screenCurrent = -3;
                     break;

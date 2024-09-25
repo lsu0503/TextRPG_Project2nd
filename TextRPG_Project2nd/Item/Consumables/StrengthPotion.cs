@@ -45,7 +45,7 @@ namespace TextRPG_Project2nd.Item.Consumables
         int power;
 
         List<EffectAtk> effectAtkList = new List<EffectAtk>();
-        List<IStatusEffect> effectList = new List<IStatusEffect>() { new AttackBuff(1, 60) };
+        List<IStatusEffect> effectList = new List<IStatusEffect>() { new BuffAttack(1, 60) };
 
         public int ActionType { get { return actionType; } }
         public string[] DetailAction { get { return detailAction; } }

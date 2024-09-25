@@ -30,6 +30,7 @@ namespace TextRPG_Project2nd
 
         public List<DogmaIndex> dogmaList = new List<DogmaIndex>();
 
+        public int saveSlot;
         public Player player;
         public int ember;
         public int amber;
@@ -58,6 +59,7 @@ namespace TextRPG_Project2nd
             isCleared = new bool[] { false, false, false, false };
 
             dogmaList.Add(new DogmaIndex(new DogmaNatalana(), true));
+            dogmaList.Add(new DogmaIndex(new DogmaErzebeta(), true));
         }
 
         public static GameManager Instance()
@@ -73,3 +75,4 @@ namespace TextRPG_Project2nd
         }
     }
 }
+

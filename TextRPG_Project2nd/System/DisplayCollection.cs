@@ -7,7 +7,7 @@ using TextRPG_Project2nd.Action;
 using TextRPG_Project2nd.Character;
 using TextRPG_Project2nd.Item;
 
-namespace TextRPG_Project2nd
+namespace TextRPG_Project2nd.System
 {
     internal class DisplayCollection
     {
@@ -37,7 +37,7 @@ namespace TextRPG_Project2nd
         }
 
         public void DisplayIUsableInfo(IStackable _item)
-        { 
+        {
             for (int i = 0; i < (_item as IAction).DetailAction.Length; i++)
             {
                 Console.SetCursorPosition(30, 13 + i);
@@ -131,8 +131,8 @@ namespace TextRPG_Project2nd
             ICharacter target = GameManager.Instance().player;
 
             // 한글은 2칸을 차지하므로 x좌표는 한글의 수 만큼 추가로 감소시켜야 한다.
-            if(target.Level < 5)
-                tempString = string.Format($"{target.Name} Lv.{target.Level} [{0, 5:N2}%]", ((target as IPlayer).ExpCur / (float)(target as IPlayer).ExpMax));
+            if (target.Level < 5)
+                tempString = string.Format($"{target.Name} Lv.{target.Level} [{0,5:N2}%]", (target as IPlayer).ExpCur / (float)(target as IPlayer).ExpMax);
             else
                 tempString = string.Format($"{target.Name} Lv.{target.Level} [-----]");
             Console.SetCursorPosition(xPos - tempString.Length, yPos);

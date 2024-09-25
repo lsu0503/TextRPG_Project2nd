@@ -10,8 +10,8 @@ namespace TextRPG_Project2nd.Action
 {
     public class EffectAtk
     {
-        IStatusEffect effect;
-        float accuracy;
+        public IStatusEffect effect;
+        public float accuracy;
 
         public EffectAtk(IStatusEffect _effect, float _accuracy)
         {

@@ -13,10 +13,10 @@ using TextRPG_Project2nd.StatusEffect;
 
 namespace TextRPG_Project2nd.Character.Monster
 {
-    internal class DarkMoonWolf : ICharacter, IMonster
+    internal class BloodTear : ICharacter, IMonster
     {
         // ICharacter 구성 요소 [Level 제외]
-        string name = "암월랑";
+        string name = "붉은 눈물";
         int hpMax;
         int hpCur;
         bool isDead = false;
@@ -110,17 +110,17 @@ namespace TextRPG_Project2nd.Character.Monster
         int originHp = 350;
         int originAtk = 12;
 
-        int[] originTypeAtk = { 120, 120, 40 };
-        int[] originDefStatus = { 15, 12, 0 };
+        int[] originTypeAtk = { 65, 135, 100 };
+        int[] originDefStatus = { 5, 5, 20 };
         int[] originAttribute = { 100, 100, 100 };
 
-        int emberDrop = 100;
-        int amberDrop = 100;
+        int emberDrop = 55;
+        int amberDrop = 55;
         List<ItemDrop> itemDropList = new List<ItemDrop>() { new ItemDrop(new SoulStoneFragment(), 0.35f) };
-        int expDrop = 100;
+        int expDrop = 55;
 
         IAttack attack = new AttackBase("공격", 10, null, 1);
-        List<ISkill> skillList = new List<ISkill>() { new SkillBite(), new SkillRelaxTension() };
+        List<ISkill> skillList = new List<ISkill>() { new SkillBash() };
 
         public int OriginHp { get { return originHp; } }
         public int OriginAtk { get { return originAtk; } }
@@ -137,7 +137,7 @@ namespace TextRPG_Project2nd.Character.Monster
         public IAttack Attack { get { return attack; } }
         public List<ISkill> SkillList { get { return skillList; } }
 
-        public DarkMoonWolf(int _level)
+        public BloodTear(int _level)
         {
             level = _level;
             isDead = false;

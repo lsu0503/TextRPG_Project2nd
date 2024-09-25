@@ -107,17 +107,17 @@ namespace TextRPG_Project2nd.Character.Monster
         }
 
         // IMonster 구성 요소
-        int originHp = 400;
-        int originAtk = 12;
+        int originHp = 200;
+        int originAtk = 11;
 
         int[] originTypeAtk = { 120, 120, 40 };
         int[] originDefStatus = { 15, 12, 0 };
         int[] originAttribute = { 100, 100, 100 };
 
-        int emberDrop = 25;
-        int amberDrop = 25;
+        int emberDrop = 65;
+        int amberDrop = 65;
         List<ItemDrop> itemDropList = new List<ItemDrop>() { new ItemDrop(new SoulStoneFragment(), 0.35f) };
-        int expDrop = 25;
+        int expDrop = 65;
 
         IAttack attack = new AttackBase("공격", 10, null, 1);
         List<ISkill> skillList = new List<ISkill>() { new SkillBite(), new SkillRelaxTension() };

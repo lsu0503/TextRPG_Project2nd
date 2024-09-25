@@ -35,19 +35,20 @@ namespace TextRPG_Project2nd.Scene
         int DepthMax = 0;
         ICharacter enemy = null;
         ICharacter player = GameManager.Instance().player;
+        bool isRest = false;
 
         List<ActionBlock> actionList = new List<ActionBlock>();
 
         public void StartScene()
         {
             GameManager.Instance().ember = 1000;
-            DepthCur = 0;
+            DepthCur = 1;
 
             do
             {
-                DepthCur++;
                 enemy = null;
                 Console.Clear();
+                isRest = false;
 
                 switch (GameManager.Instance().gradeDifficulty)
                 {
@@ -68,13 +69,18 @@ namespace TextRPG_Project2nd.Scene
                         break;
                 }
 
-                if (enemy != null)
+                if (!isRest)
                 {
                     BattleStart();
                     if (DepthCur < DepthMax)
-                        if(BattleAfter())
+                        if (BattleAfter())
                             return;
                 }
+
+                else
+                    Rest();
+
+                DepthCur++;
 
             } while (DepthCur <= DepthMax && !player.IsDead);
 
@@ -95,16 +101,16 @@ namespace TextRPG_Project2nd.Scene
             switch (DepthCur)
             {
                 default:
-                    enemy = new MinionWolf(0);
+                    enemy = SetEnemy(0, 0);
                     break;
                 case 3:
-                    enemy = new EliteWolf(1);
+                    enemy = SetEnemy(1, 1);
                     break;
                 case 4:
-                    enemy = null;
+                    isRest = true;
                     break;
                 case 5:
-                    enemy = new ChampionWolf(2);
+                    enemy = SetEnemy(2, 2);
                     break;
             }
         }
@@ -116,18 +122,18 @@ namespace TextRPG_Project2nd.Scene
             switch (DepthCur)
             {
                 default:
-                    enemy = new MinionWolf(1);
+                    enemy = SetEnemy(0, 1);
                     break;
                 case 4:
                 case 10:
-                    enemy = new EliteWolf(2);
+                    enemy = SetEnemy(1, 2);
                     break;
                 case 5:
                 case 11:
-                    enemy = null;
+                    isRest = true;
                     break;
                 case 12:
-                    enemy = new ChampionWolf(3);
+                    enemy = SetEnemy(2, 3);
                     break;
             }
         }
@@ -139,24 +145,24 @@ namespace TextRPG_Project2nd.Scene
             switch (DepthCur)
             {
                 default:
-                    enemy = new MinionWolf(2);
+                    enemy = SetEnemy(0, 2);
                     break;
                 case 4:
                 case 10:
                 case 16:
                 case 23:
                 case 30:
-                    enemy = new EliteWolf(3);
+                    enemy = SetEnemy(0, 3);
                     break;
                 case 5:
                 case 11:
                 case 17:
                 case 24:
                 case 31:
-                    enemy = null;
+                    isRest = true;
                     break;
                 case 32:
-                    enemy = new ChampionWolf(4);
+                    enemy = SetEnemy(0, 4);
                     break;
             }
         }
@@ -168,7 +174,7 @@ namespace TextRPG_Project2nd.Scene
             switch (DepthCur)
             {
                 default:
-                    enemy = new MinionWolf(3);
+                    enemy = SetEnemy(0, 3);
                     break;
                 case 4:
                 case 10:
@@ -182,7 +188,7 @@ namespace TextRPG_Project2nd.Scene
                 case 42:
                 case 43:
                 case 47:
-                    enemy = new EliteWolf(4);
+                    enemy = SetEnemy(0, 4);
                     break;
                 case 5:
                 case 11:
@@ -192,14 +198,14 @@ namespace TextRPG_Project2nd.Scene
                 case 40:
                 case 44:
                 case 49:
-                    enemy = null;
+                    isRest = true;
                     break;
                 case 45:
                 case 48:
-                    enemy = new ChampionWolf(5);
+                    enemy = SetEnemy(0, 5);
                     break;
                 case 50:
-                    enemy = new DarkMoonWolf(6);
+                    enemy = SetEnemy(0, 6);
                     break;
             }
         }
@@ -483,6 +489,8 @@ namespace TextRPG_Project2nd.Scene
 
             player.UpdateHp();
 
+            DisplayPlayerUI();
+
             ConsoleKeyInfo input;
             input = Console.ReadKey();
         }
@@ -528,6 +536,7 @@ namespace TextRPG_Project2nd.Scene
                 logList.Add(string.Concat(tempStringList));
             tempStringList.Clear();
 
+            // 자기 버프 판정
             if (tempResultBlock.buffList != null)
             {
                 tempStringList.Add($"{tempBlock.user.Name}:");
@@ -543,13 +552,14 @@ namespace TextRPG_Project2nd.Scene
                 logList.Add(string.Concat(tempStringList));
             tempStringList.Clear();
 
+            // 상대 디버프 판정
             if (tempResultBlock.badStatusList != null)
             {
                 tempStringList.Add($"{tempBlock.target.Name}:");
 
                 for (int i = 0; i < tempResultBlock.badStatusList.Count; i++)
                 {
-                    tempBlock.user.TakeEffect(tempResultBlock.badStatusList[i]);
+                    tempBlock.target.TakeEffect(tempResultBlock.badStatusList[i]);
                     tempStringList.Add($" [{tempResultBlock.badStatusList[i].Name}] ");
                 }
                 tempStringList.Add($"효과를 받았다.");
@@ -725,6 +735,68 @@ namespace TextRPG_Project2nd.Scene
 
             ConsoleKeyInfo input;
             input = Console.ReadKey();
+        }
+
+        public ICharacter SetEnemy(int grade, int level)
+        {
+            ICharacter resultEnemy = new MinionWolf(level);
+
+            switch (grade)
+            {
+                case 0:
+                    switch (new Random().Next(0, 2))
+                    {
+                        case 0:
+                            resultEnemy = new MinionWolf(level);
+                            break;
+                        case 1:
+                            resultEnemy = new MinionPhantom(level);
+                            break;
+
+                    }
+                    break;
+
+                case 1:
+                    switch (new Random().Next(0, 2))
+                    {
+                        case 0:
+                            resultEnemy = new EliteWolf(level);
+                            break;
+                        case 1:
+                            resultEnemy = new ElitePhantom(level);
+                            break;
+
+                    }
+                    break;
+
+                case 2:
+                    switch (new Random().Next(0, 2))
+                    {
+                        case 0:
+                            resultEnemy = new ChampionWolf(level);
+                            break;
+                        case 1:
+                            resultEnemy = new ChampionPhantom(level);
+                            break;
+
+                    }
+                    break;
+
+                case 3:
+                    switch (new Random().Next(0, 2))
+                    {
+                        case 0:
+                            resultEnemy = new DarkMoonWolf(level);
+                            break;
+                        case 1:
+                            resultEnemy = new BloodTear(level);
+                            break;
+
+                    }
+                    break;
+            }
+
+            return resultEnemy;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using TextRPG_Project2nd.Scene;
+using TextRPG_Project2nd.System;
 
 namespace TextRPG_Project2nd
 {
@@ -24,6 +25,7 @@ namespace TextRPG_Project2nd
                         break;
 
                     case GameManager.SceneNum.MainScene:
+                        new SaveLoader().SaveGame(GameManager.Instance().saveSlot);
                         mainScene.StartScene();
                         break;
 

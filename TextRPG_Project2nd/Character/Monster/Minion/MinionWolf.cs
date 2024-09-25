@@ -108,7 +108,7 @@ namespace TextRPG_Project2nd.Character.Monster
 
         // IMonster 구성 요소
         int originHp = 100;
-        int originAtk = 6;
+        int originAtk = 9;
 
         int[] originTypeAtk = { 120, 120, 40 };
         int[] originDefStatus = { 15, 12, 0 };

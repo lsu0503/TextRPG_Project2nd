@@ -10,6 +10,7 @@ namespace TextRPG_Project2nd.Dogma
 {
     public class DogmaNatalana : IDogma
     {
+        int dogmaID = 0;
         string name = "성광의 나탈라나";
         string[] detailDogma = new string[] { "혹자가 말하길, \"그녀는 별빛을 품고 있었다.\"",
                                               "혹자가 말하길, \"별빛의 아름다움은 그녀를 위한 것.\"",
@@ -17,6 +18,7 @@ namespace TextRPG_Project2nd.Dogma
 
         public IMagic magic = new MagicFallingStella();
 
+        public int DogmaID { get { return dogmaID; } }
         public string Name { get { return name; } }
         public string[] DetailDogma { get { return detailDogma; } }
 

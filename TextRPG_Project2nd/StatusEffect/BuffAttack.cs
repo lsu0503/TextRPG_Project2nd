@@ -8,7 +8,7 @@ using TextRPG_Project2nd.Character;
 
 namespace TextRPG_Project2nd.StatusEffect
 {
-    internal class AttackBuff : IStatusEffect
+    internal class BuffAttack : IStatusEffect
     {
         int statusType= 0;
         string name = "강화";
@@ -22,7 +22,7 @@ namespace TextRPG_Project2nd.StatusEffect
         public int TurnMax { get { return turnMax; } set { turnMax = value; } }
         public ICharacter Target { get { return target; } set { target = value; } }
 
-        public AttackBuff(int _turn, int _power)
+        public BuffAttack(int _turn, int _power)
         {
             turnMax = _turn;
             power = _power;

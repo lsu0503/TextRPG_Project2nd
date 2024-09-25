@@ -22,6 +22,7 @@ namespace TextRPG_Project2nd.Dogma
 
     public interface IDogma
     {
+        public int DogmaID { get; }
         string Name { get; }
         string[] DetailDogma { get; }
 
