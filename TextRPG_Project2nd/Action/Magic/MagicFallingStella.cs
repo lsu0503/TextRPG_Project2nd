@@ -14,8 +14,8 @@ namespace TextRPG_Project2nd.Action.Magic
         int actionType= 2;
         string name = "내리는 별빛";
         string[] detailAction = {"하늘에서 별빛이 내린다.",
-                           "아름다운, 그러면서도 순수한 파괴.",
-                           "그것은 알량한 신성 모독이었다." };
+                                 "아름다운, 그러면서도 순수한 파괴.",
+                                 "그것은 알량한 신성 모독이었다." };
         int power = 50;
 
         List<EffectAtk> effectAtkList = new List<EffectAtk>();

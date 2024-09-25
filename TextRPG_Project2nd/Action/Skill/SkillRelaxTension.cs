@@ -15,7 +15,7 @@ namespace TextRPG_Project2nd.Action.Skill
         int actionType= 1;
         string name = "긴장 풀기";
         string[] detailAction = new string[] { "익숙한 몸동작을 통해서 온 몸의 긴장을 푼다.",
-                                         "짧은 시간, 공격력이 상승한다." };
+                                               "짧은 시간, 공격력이 상승한다." };
         int power = -1;
 
         List<EffectAtk> effectAtkList = new List<EffectAtk>();

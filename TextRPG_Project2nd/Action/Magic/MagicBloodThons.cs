@@ -14,6 +14,8 @@ namespace TextRPG_Project2nd.Action.Magic
         int actionType= 2;
         string name = "피 무리 가시";
         string[] detailAction = {"수많은 피의 가시를 발사한다.",
+                                "피의 가시는 출혈을 유발한다.",
+                                "",
                                 "마녀의 힘은 본디 생명이었다.",
                                 "그것이 삶을 의미하지는 않았지만 말이다." };
         int power = 10;

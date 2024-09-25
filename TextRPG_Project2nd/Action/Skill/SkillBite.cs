@@ -14,8 +14,8 @@ namespace TextRPG_Project2nd.Action.Skill
         int actionType= 1;
         string name = "물어뜯기";
         string[] detailAction = new string[] { "날렵하게 달려들어 목덜미를 물어뜯는다.",
-                                         "... 스러져 가는 몸에는 약점이 없다.",
-                                         "그것은 저들과 우리 모두에게 재앙이었다."};
+                                               "... 스러져 가는 몸에는 약점이 없다.",
+                                               "그것은 저들과 우리 모두에게 재앙이었다."};
         int power = 20;
 
         List<EffectAtk> effectAtkList = new List<EffectAtk>();
