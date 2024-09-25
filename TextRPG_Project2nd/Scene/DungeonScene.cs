@@ -620,17 +620,18 @@ namespace TextRPG_Project2nd.Scene
             }
 
             Console.SetCursorPosition(8, Console.CursorTop);
-            Console.Write($"{GameManager.Instance().player.Name} HP: {GameManager.Instance().player.HpCur} / {GameManager.Instance().player.HpMax}");
-            
-            Console.SetCursorPosition(49, Console.CursorTop);
-            Console.WriteLine("Ember: {0,4}", GameManager.Instance().ember);
+            Console.Write($"{GameManager.Instance().player.Name}");
 
-            Console.Write(" {0,2}층 |  ", DepthCur);
-
-            Console.SetCursorPosition(8, Console.CursorTop);
             for (int i = 0; i < player.EffectList.Count; i++)
                 Console.Write($"[{player.EffectList[i].statusEffect.Name}]  ");
+
             Console.WriteLine();
+            Console.Write(" {0,2}층 | ", DepthCur);
+            Console.Write($"Lv.{GameManager.Instance().player.Level, 2}  HP: {GameManager.Instance().player.HpCur} / {GameManager.Instance().player.HpMax}");
+            Console.SetCursorPosition(8, Console.CursorTop);
+
+            Console.SetCursorPosition(49, Console.CursorTop);
+            Console.WriteLine("Ember: {0,4}", GameManager.Instance().ember);
 
             Console.WriteLine("------------------------------------------------------------");
 

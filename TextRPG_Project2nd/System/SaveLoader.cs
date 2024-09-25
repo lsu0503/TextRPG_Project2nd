@@ -195,6 +195,8 @@ namespace TextRPG_Project2nd.System
 
             (player as IPlayer).Dogma = idDict.dogmaCollection.Find(id => id.DogmaID == Convert.ToInt32(_save.playerDogma));
 
+            player.UpdateAttribute();
+
             GameManager.Instance().amber = Convert.ToInt32(_save.saveAmber);
             
             for(int i = 0; i < _save.saveIsCleared.Length; i++)
