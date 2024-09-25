@@ -132,13 +132,13 @@ namespace TextRPG_Project2nd.System
 
             // 한글은 2칸을 차지하므로 x좌표는 한글의 수 만큼 추가로 감소시켜야 한다.
             if (target.Level < 5)
-                tempString = string.Format($"{target.Name} Lv.{target.Level} [{0,5:N2}%]", (target as IPlayer).ExpCur / (float)(target as IPlayer).ExpMax);
+                tempString = string.Format($"{target.Name} Lv.{target.Level} [{(target as IPlayer).ExpCur / (float)(target as IPlayer).ExpMax, 5:N2}%]");
             else
                 tempString = string.Format($"{target.Name} Lv.{target.Level} [-----]");
             Console.SetCursorPosition(xPos - tempString.Length, yPos);
             Console.Write(tempString);
 
-            tempString = string.Format("생명: {0, 3}   정신: {0, 3}   영혼: {0, 3}", target.Attribute[0], target.Attribute[1], target.Attribute[2]);
+            tempString = string.Format($"생명: {target.Attribute[0], 3}   정신: {target.Attribute[1], 3}   영혼: {target.Attribute[2], 3}");
             Console.SetCursorPosition(xPos - tempString.Length - 6, yPos + 1);
             Console.Write(tempString);
 
@@ -146,8 +146,12 @@ namespace TextRPG_Project2nd.System
             Console.SetCursorPosition(xPos - tempString.Length - 5, yPos + 2);
             Console.Write(tempString);
 
-            tempString = string.Format("마법 공격력: {0,3}", target.TypeAtk[1]);
+            tempString = string.Format("스킬 공격력: {0,3}", target.TypeAtk[1]);
             Console.SetCursorPosition(xPos - tempString.Length - 5, yPos + 3);
+            Console.Write(tempString);
+
+            tempString = string.Format("마법 공격력: {0,3}", target.TypeAtk[2]);
+            Console.SetCursorPosition(xPos - tempString.Length - 5, yPos + 4);
             Console.Write(tempString);
         }
     }

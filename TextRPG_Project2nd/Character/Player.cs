@@ -164,6 +164,8 @@ namespace TextRPG_Project2nd.Character
 
         public void GetExp(int amount)
         {
+            expMax = (int)((100.0f * MathF.Pow(2.5f, level)) - (50 * MathF.Pow(level, 2)));
+
             if (level < 5)
             {
                 expCur += amount;
