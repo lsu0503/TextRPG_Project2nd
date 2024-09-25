@@ -72,11 +72,17 @@ namespace TextRPG_Project2nd.System
 
         public bool LoadGame(int index)
         {
+            string LoadString = File.ReadAllText(Path.Combine(FilePath, "test.json"));
+            output = JsonSerializer.Deserialize<Data>(LoadString);
+
             return false;
         }
 
         public bool CheckSave(int index)
         {
+            
+            
+            
             return false;
         }
     }

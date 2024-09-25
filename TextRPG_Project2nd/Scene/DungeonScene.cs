@@ -575,7 +575,7 @@ namespace TextRPG_Project2nd.Scene
             Console.Clear();
 
             // 배틀 Log 출력
-            for (int i = (int)MathF.Max(0, logList.Count - Console.WindowHeight - 10); i < logList.Count; i++)
+            for (int i = (int)MathF.Max(0, logList.Count - Console.WindowHeight + 10); i < logList.Count; i++)
                 Console.WriteLine(logList[i]);
         }
         public void DisplayPlayerUI()
