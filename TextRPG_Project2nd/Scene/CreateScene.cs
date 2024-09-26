@@ -33,8 +33,6 @@ namespace TextRPG_Project2nd.Scene
             Console.WriteLine(GameManager.Instance().saveSlot);
 
             string temp = Console.ReadLine();
-
-            GameManager.Instance().player.Name = temp;
         }
 
         public void DisplaySelectStella()
