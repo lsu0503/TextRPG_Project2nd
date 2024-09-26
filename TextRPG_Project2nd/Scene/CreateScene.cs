@@ -30,9 +30,10 @@ namespace TextRPG_Project2nd.Scene
             Console.WriteLine("                당신의 이름을 정해주세요.");
             Console.WriteLine("------------------------------------------------------------");
             Console.WriteLine("Enter 'Enter' to enter name\n");
-            Console.WriteLine(GameManager.Instance().saveSlot);
 
             string temp = Console.ReadLine();
+
+            GameManager.Instance().player.Name = temp
         }
 
         public void DisplaySelectStella()
