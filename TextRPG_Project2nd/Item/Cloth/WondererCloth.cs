@@ -25,7 +25,7 @@ namespace TextRPG_Project2nd.Item.Cloth
         public int ItemID { get { return itemID; } }
         public string Name { get { return name; } }
         public string[] DetailItem { get { return detailItem; } }
-
+         
         public int PriceBuy { get { return priceBuy; } }
         public int PriceSell { get { return priceSell; } }
 
