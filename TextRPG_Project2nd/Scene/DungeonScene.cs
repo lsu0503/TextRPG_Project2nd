@@ -537,7 +537,7 @@ namespace TextRPG_Project2nd.Scene
             tempStringList.Clear();
 
             // 자기 버프 판정
-            if (tempResultBlock.buffList != null)
+            if (tempResultBlock.buffList != null && tempResultBlock.buffList.Count > 0)
             {
                 tempStringList.Add($"{tempBlock.user.Name}:");
 
@@ -553,7 +553,7 @@ namespace TextRPG_Project2nd.Scene
             tempStringList.Clear();
 
             // 상대 디버프 판정
-            if (tempResultBlock.badStatusList != null)
+            if (tempResultBlock.badStatusList != null && tempResultBlock.badStatusList.Count > 0)
             {
                 tempStringList.Add($"{tempBlock.target.Name}:");
 
