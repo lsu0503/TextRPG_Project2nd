@@ -41,7 +41,7 @@ namespace TextRPG_Project2nd.Item.Consumables
         int actionType = 3;
         string[] detailAction = new string[] { "상점에 팔아서 100Amber를 얻을 수 있다.",
                                                "혹은 사용하여 100Ember를 습득할 수 있다."};
-        int power;
+        int power = 100;
 
         List<EffectAtk> effectAtkList = new List<EffectAtk>();
         List<IStatusEffect> effectList = new List<IStatusEffect>();
